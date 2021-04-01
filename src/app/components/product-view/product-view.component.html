@@ -1,0 +1,9 @@
+
+<div class="product-container hvr-float hvr-glow">
+  <img class = "product-image" src="{{product.imageLink}}">
+  <a class ="product-text text-decoration" target="_blank" href="{{product.link}}">{{product.title}}</a>
+  <div class="product-text">{{product.brand}}</div>
+  <div class="product-text">{{product.price}}</div>
+  <ngb-rating [rate]="product.rating"></ngb-rating>
+<!--  <button class="btn btn-dark go-button" (click)="goToExternalLink(product.link)">Go</button>-->
+</div>

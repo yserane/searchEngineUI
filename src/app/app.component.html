@@ -1,0 +1,66 @@
+<mat-toolbar-row [hidden]="result.length==0">
+  <div class = "search-parent-toolbar">
+    <img src="./assets/search-engine.svg" class = "search-image">
+    <form class="form-inline md-form form-sm" style="width: 100%">
+      <input class="search-input" [(ngModel)]="searchString"  name= "searchString" (change) = "logValue()" type="text">
+    </form>
+  </div>
+  <div ngbDropdown class="d-inline-block dropdown-align-toolbar">
+    <button class="btn btn-dark" id="dropdownForm2" ngbDropdownToggle>{{dropDownLabel}}</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownForm2">
+      <button *ngFor="let country of countryList" ngbDropdownItem (click)="changeCountry(country.name)">
+        <img class = "drop-down-icon" src="{{country.img}}">{{country.name}}
+        <div  class="dropdown-divider"></div>
+      </button>
+    </div>
+  </div>
+  <div ngbDropdown class="d-inline-block dropdown-align-toolbar" style="left:6%">
+    <button class="btn btn-dark" id="dropdownForm3" ngbDropdownToggle>{{dropDownLabelPrice}}</button>
+    <mat-icon style="cursor:pointer;" (click)="clearPriceFilter()">clear</mat-icon>
+    <div ngbDropdownMenu aria-labelledby="dropdownForm3">
+        <button *ngFor="let price of priceFilterArray" ngbDropdownItem (click)="filterByPrice(price.min, price.max, price.text)">
+        {{price.text}}
+        </button>
+    </div>
+  </div>
+  <button type="button" class="btn btn-dark search-button-toolbar" (click)="search()">Search</button>
+</mat-toolbar-row>
+<div class="content" role="main">
+  <div [hidden]="result.length>0" class="logo-frame">
+    <img class = "logo-image" src="./assets/logo1.png">
+  </div>
+  <div class = "parent-container">
+    <div [hidden]="result.length>0">
+  <div class = "search-parent">
+    <img src="./assets/search-engine.svg" class = "search-image">
+    <form class="form-inline md-form form-sm" style="width: 100%">
+      <input class="search-input" [(ngModel)]="searchString"  name= "searchString" (change) = "logValue()" type="text">
+    </form>
+  </div >
+        <div ngbDropdown class="d-inline-block dropdown-align">
+          <button class="btn btn-dark" id="dropdownForm1" ngbDropdownToggle>{{dropDownLabel}}</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+            <button *ngFor="let country of countryList" ngbDropdownItem (click)="changeCountry(country.name)">
+              <img class = "drop-down-icon" src="{{country.img}}">{{country.name}}
+              <div  class="dropdown-divider"></div>
+            </button>
+          </div>
+    </div>
+    <button type="button" class="btn btn-dark search-button" (click)="search()">Search</button>
+    </div>
+    <mat-grid-list [hidden]="result.length==0" cols = "3" rowHeight = "400px">
+      <mat-grid-tile *ngFor="let product of result | paginate: config"
+        [colspan] = "1"
+        [rowspan] = "1" >
+
+        <app-product-view [product]="product"></app-product-view>
+      </mat-grid-tile>
+      <div  class="dropdown-divider"></div>
+
+    </mat-grid-list>
+
+    <div class="pagination-footer" [hidden]="result.length == 0">
+      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+  </div>
+</div>
